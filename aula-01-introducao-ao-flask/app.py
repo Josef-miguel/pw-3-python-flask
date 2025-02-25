@@ -9,18 +9,23 @@ app = Flask(__name__, template_folder='views')
 #Criando função no python
 def home():
     return render_template('index.html')
-# Rota de games
+# Rota de games {do lado esquerdo é chave do lado direito}
 @app.route('/games')
-def games():
-    titulo = 'CS-GO'
-    ano = 2012
+def games(): 
+    #Dicionário em python (Objeto em python)
+    game = {
+          'titulo' : 'CS-GO',
+              'ano' : 2012,
+    'categoria' :'FPS Online'
+        
+    }
+
+
     categoria = 'FPS Online'
     jogadores = ['Miguel José', 'Miguel Isack', 'Leaf', 'Quemario', 'Trop', 'aspax', 'maxxdiego']
     jogos = ['Valorant','League of legends', 'Minecraft', 'Gta 5', 'Sonic']
     return render_template('games.html',
-                           titulo=titulo,
-                           ano=ano,
-                           categoria=categoria,
+                            game=game,
                            jogadores=jogadores,
                            jogos=jogos)
 
