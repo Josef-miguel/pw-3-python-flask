@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> The games </title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+<body>
+    <header>
+          <h1 style="text-align: center;">The games1</h1>
+          <hr>
+    </header>
+    <img src="{{url_for('static', filename='imgs/csback.png')}}">
+    {% block content %}
+    <!-- Aqui irá o conteúdo das outras páginas -->
+     {% endblock content %}
+    <footer>
+         <hr>
+         <p style="text-align: center;">Todos os direitos reservados ®</p>
+         
+    </footer>
+</body>
+</html>
