@@ -57,10 +57,10 @@ def init_app(app):
         
         #Rota de cadastro de consoles
     @app.route('/consoles', methods=['GET','POST'])
-    def console():
+    def consoles():
         if request.method == 'POST':
             if request.form.get('nome') and request.form.get('fabricante') and request.form.get('ano') and request.form.get('preco'):
                 consolelist.append({'nome': request.form.get('nome'), 'fabricante' : request.form.get('fabricante'), 'ano': request.form.get('ano'), 'preco' : request.form.get('preco')})
-            return redirect(url_for('console'))
+            return redirect(url_for('consoles'))
         return render_template('consoles.html',
                                consolelist=consolelist)
