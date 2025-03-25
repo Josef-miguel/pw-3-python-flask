@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,7 +9,7 @@
     <title>Cadastro de console</title>
 </head>
 <body>
-    <h2>Cadastro de games</h2>
+    <h2>Cadastro de consoles</h2>
     <hr>
     <form action="{{url_for('consoles')}}" method="POST" >
          <label>Nome:</label>
@@ -32,3 +35,4 @@
     
 </body>
 </html>
+{% endblock %}
