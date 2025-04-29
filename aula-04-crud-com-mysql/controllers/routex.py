@@ -1,4 +1,6 @@
 from flask import render_template, request, redirect, url_for
+from models.database import Game
+from models.database import Console
 jogadores = ['Miguel José', 'Miguel Isack', 'Leaf', 'Quemario', 'Trop', 'aspax', 'maxxdiego']
 
  #Dicionário em python (Objeto em python)
@@ -65,6 +67,14 @@ def init_app(app):
         return render_template('consoles.html',
                                consolelist=consolelist)
         
+        
+    #Rota de estoque (CRUD)
+    @app.route('/estoque')
+    def estoque():
+        #Fazendo um select no banco (pegando todos os jogos da tabela)
+        gameestoque = Game.query.all()
+        consoleestoque = Console.query.all()
+        return render_template('estoque.html', gamesestoque=gameestoque, consoleestoque=consoleestoque)    
         
         #flask-sqlalchemy auxilia na criação dos models
         #.findOne() .create() .delete() .update
