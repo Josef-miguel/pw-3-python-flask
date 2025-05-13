@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for
-from models.database import Game
-from models.database import Console
+from models.database import Game, Console, db
+
 jogadores = ['Miguel José', 'Miguel Isack', 'Leaf', 'Quemario', 'Trop', 'aspax', 'maxxdiego']
 
  #Dicionário em python (Objeto em python)
@@ -69,14 +69,60 @@ def init_app(app):
         
         
     #Rota de estoque (CRUD)
-    @app.route('/estoque')
-    def estoque():
+    @app.route('/estoque', methods=['GET', 'POST'])
+    @app.route('/estoque/<int:id>')
+    def estoque(id=None):
+        #verificar se foi enviado alguma ID
+        if id:
+            game = Game.query.get(id)
+            #deltando o jogo
+            db.session.delete(game)
+            db.session.commit()
+            return redirect(url_for('estoque'))
+
+        # = -> Atribuição 
+        # == -> Comparação simples (valor)
+        # === -> Compara valor e tipo da variavel
+        if request.method == 'POST':
+            #Cadastra novo jogo
+            newgame = Game(request.form['titulo'], request.form['ano'], request.form['categoria'], request.form['plataforma'], request.form['preco'],request.form['quantidade'])
+            # newconsole = Console(request.form['nome'], request.form['fabricante'], request.form['preco'],request.form['quantidade'])
+            #Envivando para o banco
+            db.session.add(newgame) 
+            # db.session.add(newconsole)
+            #Confirmando as alterações
+            db.session.commit()
+            return redirect(url_for('estoque'))
+            
         #Fazendo um select no banco (pegando todos os jogos da tabela)
         gameestoque = Game.query.all()
-        consoleestoque = Console.query.all()
-        return render_template('estoque.html', gamesestoque=gameestoque, consoleestoque=consoleestoque)    
+       
+        return render_template('estoque.html', gamesestoque=gameestoque)    
         
         #flask-sqlalchemy auxilia na criação dos models
         #.findOne() .create() .delete() .update
         #pymysql Permiti conectar a aplicação flask ao banco MYSQL
         #mysqlcliente driver de conexão
+    @app.route('/estoqueconsole', methods=['GET', 'POST'])
+    @app.route('/estoqueconsole/<int:id>')
+    def estoqueconsole(id=None):
+        #verificar se foi enviado alguma ID
+        if id:
+            console = Console.query.get(id)
+            #deltando o jogo
+            db.session.delete(console)
+            db.session.commit()
+            return redirect(url_for('estoqueconsole'))
+        if request.method == 'POST':
+            #Cadastra novo jogo
+
+            newconsole = Console(request.form['nome'], request.form['fabricante'], request.form['preco'], request.form['quantidade'])
+            #Envivando para o banco
+            db.session.add(newconsole) 
+            # db.session.add(newconsole)
+            #Confirmando as alterações
+            db.session.commit()
+            return redirect(url_for('estoqueconsole'))
+        consoleestoque = Console.query.all()
+        return render_template('estoqueconsole.html', consoleestoque=consoleestoque)    
+        

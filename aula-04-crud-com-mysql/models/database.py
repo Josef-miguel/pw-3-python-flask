@@ -30,7 +30,7 @@ class Console(db.Model):
      quantidade = db.Column(db.Integer)
       
      def __init__(self, nome, fabricante,  preco, quantidade):
-        self.titulo = nome
-        self.ano = fabricante
+        self.nome = nome
+        self.fabricante = fabricante
         self.preco = preco
         self.quantidade = quantidade
